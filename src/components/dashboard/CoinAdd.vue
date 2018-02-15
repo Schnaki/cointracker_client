@@ -2,7 +2,7 @@
   <form>
     <div class="form-group">
       <label>Select Coin</label>
-      <select v-model="name" class="form-control">
+      <select v-model="cmc_id" class="form-control">
         <option v-for="option in options">
           {{ option }}
         </option>
@@ -10,7 +10,7 @@
     </div>
     <div class="form-group">
       <label>Enter Amount</label>
-      <input v-model="amount" class="form-control">
+      <input v-model="amount" type="number" class="form-control">
     </div>
     <button class="btn btn-success" @click="add()">Add</button>
   </form>
@@ -19,11 +19,12 @@
 <script>
   import axios from 'axios'
   import auth from '../../services/auth.js'
+  import { eventBus } from '../../main.js'
   export default {
     data: () => {
       return {
-        name: '',
-        amount: 0,
+        cmc_id: '',
+        amount: '',
         options: []
       }
     },
@@ -32,7 +33,7 @@
         let vm = this;
         axios.post('/api/add-coin',
           { 
-            name: vm.name,
+            cmc_id: vm.cmc_id,
             amount: vm.amount
           },
           {
@@ -41,6 +42,9 @@
         )
         .then(response => {
           console.log(response)
+          if(response.data.status == 'success') {
+            eventBus.$emit('coinAdded', response.data['id'])
+          }
         })
         .then(error => {
           console.log(error)
@@ -49,7 +53,7 @@
     },
     created() {
       let vm = this;
-      axios.get('/api/coin-ids')
+      axios.get('/api/cmc-ids')
       .then(response => {
         vm.options = response.data 
       })
