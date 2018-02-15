@@ -49,8 +49,13 @@
     },
     created() {
       let vm = this
-      this.get_coins()
-      this.get_total()
+      vm.get_coins()
+      vm.get_total()
+      setInterval(() => {
+        vm.update_coins()
+        vm.get_total()
+      }, 60000)
+
 
       eventBus.$on('coinAdded', id => {
         axios.get('/api/get-coin?id='+id,
@@ -72,6 +77,27 @@
       })
     },
     methods: {
+      update_coins() {
+        let vm = this;
+        axios.get('/api/get-coins',
+          {
+            headers: { 'x-access-token': auth.getToken() }
+          }
+        )
+        .then(response => {
+          console.log(response)
+          if(response.data.status == 'success') {
+            for (let i=0; i< vm.coins.length; i++) {
+              vm.coins[i].price = response.data['coins'][i].price
+              vm.coins[i].total = response.data['coins'][i].total
+            }
+          } 
+        })
+        .then(error => {
+          console.log(error)
+        })
+
+      },
       get_total() {
         let vm = this;
         console.log('happens')
