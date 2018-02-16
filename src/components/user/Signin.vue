@@ -20,38 +20,41 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import auth from '../../services/auth.js'
-  import { eventBus } from '../../main.js'
+import axios from 'axios'
+import auth from '../../services/auth.js'
+import { eventBus } from '../../main.js'
 
-  export default {
-    data: () => {
-      return {
-        username: '',
-        password: '',
-        passwordRepeat: ''
-      }
-    },
-    methods: {
-      signin() {
-        const vm = this;
-        axios.post('/api/signin', {
-          username: vm.username,
-          password: vm.password
-        })
-        .then(response => {
-          console.log(response)
-          let data = response.data
-          if (data.status == "success") {
-            auth.setToken(data.token)
-            eventBus.$emit("authChange", true)
-            vm.$router.push('/')
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-      }
+export default {
+  data: () => {
+    return {
+      username: '',
+      password: '',
+      passwordRepeat: ''
+    }
+  },
+  methods: {
+    signin() {
+      const vm = this;
+      axios.post('/api/signin', {
+        username: vm.username,
+        password: vm.password
+      })
+      .then(response => {
+        console.log(response)
+        let data = response.data
+        eventBus.$emit('showStatus', data)
+        if (data.status == "success") {
+          auth.setToken(data.token)
+          eventBus.$emit('authChange', true)
+          vm.$router.push('/')
+        } else {
+          eventBus.$emit('showStatus', data)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
+}
 </script>

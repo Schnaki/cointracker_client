@@ -17,49 +17,51 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import auth from '../../services/auth.js'
-  import { eventBus } from '../../main.js'
-  export default {
-    data: () => {
-      return {
-        cmc_id: '',
-        amount: '',
-        options: []
-      }
-    },
-    methods: {
-      add() {
-        let vm = this;
-        axios.post('/api/add-coin',
-          { 
-            cmc_id: vm.cmc_id,
-            amount: vm.amount
-          },
-          {
-            headers: { 'x-access-token': auth.getToken() }
-          }
-        )
-        .then(response => {
-          console.log(response)
-          if(response.data.status == 'success') {
-            eventBus.$emit('coinAdded', response.data['id'])
-          }
-        })
-        .then(error => {
-          console.log(error)
-        })
-      }
-    },
-    created() {
+import axios from 'axios'
+import auth from '../../services/auth.js'
+import { eventBus } from '../../main.js'
+export default {
+  data: () => {
+    return {
+      cmc_id: '',
+      amount: '',
+      options: []
+    }
+  },
+  methods: {
+    add() {
       let vm = this;
-      axios.get('/api/cmc-ids')
+      axios.post('/api/add-coin',
+        { 
+          cmc_id: vm.cmc_id,
+          amount: vm.amount
+        },
+        {
+          headers: { 'x-access-token': auth.getToken() }
+        }
+      )
       .then(response => {
-        vm.options = response.data 
+        console.log(response)
+        if(response.data.status == 'success') {
+          eventBus.$emit('coinAdded', response.data['id'])
+        } else {
+          eventBus.$emit('showStatus', response.data)
+        }
       })
       .then(error => {
         console.log(error)
       })
     }
+  },
+  created() {
+    let vm = this;
+    axios.get('/api/cmc-ids')
+    .then(response => {
+      vm.options = response.data 
+    })
+    .then(error => {
+      console.log(error)
+    })
   }
+}
 </script>

@@ -12,25 +12,25 @@
 </template>
 
 <script>
-  import auth from '../../services/auth.js'
-  import { eventBus } from '../../main.js'
-  import CoinAdd from './CoinAdd.vue'
-  import CoinTable from './CoinTable.vue'
-  export default {
-    data: () => {
-      return {
-        isAuthenticated: auth.isAuthenticated()
-      }
-    },
-    components: {
-      'ct-coin-add': CoinAdd,
-      'ct-coin-table': CoinTable
-    },
-    created() {
-      eventBus.$on('authChange', (data) => {
-        this.isAuthenticated = data
-      })
+import auth from '../../services/auth.js'
+import { eventBus } from '../../main.js'
+import CoinAdd from './CoinAdd.vue'
+import CoinTable from './CoinTable.vue'
+export default {
+  data: () => {
+    return {
+      isAuthenticated: auth.isAuthenticated()
     }
-
+  },
+  components: {
+    'ct-coin-add': CoinAdd,
+    'ct-coin-table': CoinTable
+  },
+  created() {
+    eventBus.$on('authChange', (data) => {
+      this.isAuthenticated = data
+    })
   }
+
+}
 </script>
