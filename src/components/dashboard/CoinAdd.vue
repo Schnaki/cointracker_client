@@ -10,7 +10,7 @@
     </div>
     <div class="form-group">
       <label>Enter Amount</label>
-      <input v-model="amount" type="number" class="form-control">
+      <input v-model="amount" type="text" class="form-control">
     </div>
     <button class="btn btn-success" @click="add()">Add</button>
   </form>
