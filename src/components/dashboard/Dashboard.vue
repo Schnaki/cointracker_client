@@ -3,8 +3,10 @@
     <ct-coin-add></ct-coin-add>
     <hr>
     <div class="row">
-      <div align="center">
-        <ct-coin-table></ct-coin-table>
+      <div class="col-md-12">
+        <div align="center">
+          <ct-coin-table></ct-coin-table>
+        </div>
       </div>
     </div>
   </div>
