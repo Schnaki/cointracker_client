@@ -2,7 +2,11 @@
   <div v-if="isAuthenticated">
     <ct-coin-add></ct-coin-add>
     <hr>
-    <ct-coin-table></ct-coin-table>
+    <div class="row">
+      <div align="center">
+        <ct-coin-table></ct-coin-table>
+      </div>
+    </div>
   </div>
   <div v-else>
     <h2>Please Sign up or Sign in to continue</h2>

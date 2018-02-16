@@ -1,7 +1,7 @@
 <template>
   <div style="overflow: hidden">
     <h2>Total: {{ total.toFixed(2) }}</h2>
-    <table class="table table-striped">
+    <table class="table table-striped table-responsive">
       <thead>
         <tr>
           <th>Name</th>
