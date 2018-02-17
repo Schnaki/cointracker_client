@@ -1,18 +1,24 @@
 <template>
   <form>
-    <div class="form-group">
-      <label>Select Coin</label>
-      <select v-model="cmc_id" class="form-control">
-        <option v-for="option in options">
-          {{ option }}
-        </option>
-      </select>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group">
+          <select v-model="cmc_id" class="form-control">
+            <option v-for="option in options">
+              {{ option }}
+            </option>
+          </select>
+          <input placeholder="Enter Amount" v-model="amount" type="text" class="form-control">
+          <div class="input-group-append">
+            <button class="btn btn-success" @click="add()">
+              <i class="fas fa-plus"></i> 
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+      </div>
     </div>
-    <div class="form-group">
-      <label>Enter Amount</label>
-      <input v-model="amount" type="text" class="form-control">
-    </div>
-    <button class="btn btn-success" @click="add()">Add</button>
   </form>
 </template>
 
@@ -23,7 +29,7 @@ import { eventBus } from '../../main.js'
 export default {
   data: () => {
     return {
-      cmc_id: '',
+      cmc_id: 'bitcoin',
       amount: '',
       options: []
     }
