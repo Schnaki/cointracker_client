@@ -4,10 +4,14 @@
     <hr>
     <ct-coin-table></ct-coin-table>
   </div>
-  <div v-else>
-    <h2>Please Sign up or Sign in to continue</h2>
-    <router-link class="btn btn-info" :to="'signin'">Sign in</router-link>
-    <router-link class="btn btn-info" :to="'signup'">Sign up</router-link>
+  <div align="center" v-else>
+    <h3>Signup or Login to continue</h3>
+    <router-link class="btn btn-success" :to="'signup'">
+      <i class="fas fa-user-plus"></i> Sign up 
+    </router-link>
+    <router-link class="btn btn-info" :to="'login'">
+      <i class="fas fa-sign-in-alt"></i> Login
+    </router-link>
   </div>
 </template>
 

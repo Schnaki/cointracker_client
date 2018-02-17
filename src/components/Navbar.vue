@@ -11,23 +11,23 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mr-auto">
-        <span v-if="isAuthenticated">
-          <li class="nav-item">
-            <a class="nav-link" href="#" @click="signout">Sign out</a>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="'settings'">Settings</router-link>
-          </li>
-        </span>
-        <span v-else>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="'signin'">Sign in</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="'signup'">Sign up</router-link>
-          </li>
-        </span>
+      <ul class="nav navbar-nav mr-auto navbar-right">
+        <li v-if="isAuthenticated" class="nav-item">
+          <a class="nav-link" href="#" @click="logout">
+            <i class="fas fa-sign-out-alt"></i> Log out
+          </a>
+        </li>
+        <li id="settings" v-if="isAuthenticated" class="nav-item">
+          <router-link class="nav-link" :to="'settings'">Settings</router-link>
+        </li>
+        <li v-if="!isAuthenticated" class="nav-item">
+          <router-link class="nav-link" :to="'signup'">
+            <i class="fas fa-user-plus"></i> Sign up</router-link>
+        </li>
+        <li v-if="!isAuthenticated" class="nav-item">
+          <router-link class="nav-link" :to="'login'">
+            <i class="fas fa-sign-in-alt"></i> Login</router-link>
+        </li>
       </ul>
     </div>
   </nav>
@@ -43,7 +43,7 @@
       }
     },
     methods: {
-      signout() {
+      logout() {
         auth.removeToken()
         eventBus.$emit("authChange", false)
       }

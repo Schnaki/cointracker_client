@@ -15,7 +15,7 @@
              v-model="password">
     </div>
     </div>
-    <button class="btn btn-info" @click="signin">Sign in</button>
+    <button class="btn btn-info" @click="login">Login</button>
   </form>
 </template>
 
@@ -33,9 +33,9 @@ export default {
     }
   },
   methods: {
-    signin() {
+    login() {
       const vm = this;
-      axios.post('/api/signin', {
+      axios.post('/api/login', {
         username: vm.username,
         password: vm.password
       })
